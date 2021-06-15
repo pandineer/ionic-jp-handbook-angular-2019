@@ -11,6 +11,13 @@ export class HomePage {
     { name: 'タスク１' },
     { name: 'タスク２' },
   ];
+  task: string;
   constructor() {}
 
+  addTask() {
+    this.tasks.push({
+      name: this.task
+    });
+    this.task = '';
+  }
 }
