@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
+import { LoadingController } from '@ionic/angular';
 
 @Component({
   selector: 'app-home',
@@ -16,12 +17,18 @@ export class HomePage {
 
   constructor(
       public http: HttpClient,
+      public loadingController: LoadingController,
   ) {}
 
-  ionViewDidEnter() {
+  async ionViewDidEnter() {
+    const loading = await this.loadingController.create({
+      message: 'Loading...',
+    });
+    await loading.present();
     this.http.get('https://public-api.wordpress.com/rest/v1.1/sites/ionicjp.wordpress.com/posts/')
         .subscribe(data => {
           this.posts = data['posts'];
+          loading.dismiss();
         });
   }
 }
