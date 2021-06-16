@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { NavController, AlertController } from "@ionic/angular";
-
+import { firebaseError } from './firebase.error';
 
 @Injectable({
   providedIn: 'root'
@@ -44,6 +44,9 @@ export class AuthService {
   }
 
   async alertError(e) {
+      if (firebaseError.hasOwnProperty(e.code)) {
+          e = firebaseError[e.code];
+      }
       const alert = await this.alertController.create({
           header: e.code,
           message: e.message,
